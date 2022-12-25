@@ -1,0 +1,46 @@
+{
+  "name": "cats-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/cats-api/src",
+  "targets": {
+    "build": {
+      "executor": "@diogovcs/graphql-mesh:build",
+      "options": {
+        "meshYmlPath": "apps/cats-api/config",
+        "singleMeshFile": true,
+        "outputPath": "dist/apps/cats-api",
+        "rootPath": "apps/cats-api",
+        "tsconfigPath": "apps/cats-api/tsconfig.lib.json",
+        "typescriptSupport": true
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ],
+      "outputs": ["coverage/apps/cats-api"],
+      "options": {
+        "jestConfig": "apps/cats-api/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "serve": {
+      "executor": "@diogovcs/graphql-mesh:serve",
+      "options": {
+        "meshYmlPath": "apps/cats-api/config"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/cats-api/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,15 @@
+sources:
+  - name: TheCatApi
+    handler:
+      openapi:
+        source: ./schema.yml
+transforms:
+  - namingConvention:
+      typeNames: pascalCase
+      fieldNames: camelCase
+  - mock:
+      mocks:
+        - apply: Cat.id
+          faker: '{{name.id}}'
+        - apply: Query.breeds
+          length: 2

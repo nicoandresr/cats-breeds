@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: The Cat API
+  description: An open, free, read & write API all about Cats.
+  version: 1.0.0
+servers:
+  - url: https://api.thecatapi.com/v1
+components:
+  schemas:
+    Breeds:
+      type: array
+      description: A list of cats breeds
+      items:
+        $ref: '#/components/schemas/Cat'
+    Cat:
+      type: object
+      properties:
+        weight:
+          type: object
+          properties:
+            imperial:
+              type: string
+            metric:
+              type: string
+        id:
+          type: string
+        name:
+          type: string
+        cfa_url:
+          type: string
+        vetstreet_url:
+          type: string
+        vcahospitals_url:
+          type: string
+        temperament:
+          type: string
+        origin:
+          type: string
+        country_codes:
+          type: string
+        country_code:
+          type: string
+        description:
+          type: sting
+        life_span:
+          type: string
+        indoor:
+          type: boolean
+        lap:
+          type: boolean
+        alt_names:
+          type: string
+        adaptability:
+          type: integer
+        affection_level: 
+          type: integer
+        child_friendly: 
+          type: integer
+        dog_friendly: 
+          type: integer
+        energy_level: 
+          type: integer
+        grooming: 
+          type: integer
+        health_issues: 
+          type: integer
+        intelligence: 
+          type: integer
+        shedding_level: 
+          type: integer
+        social_needs: 
+          type: integer
+        stranger_friendly: 
+          type: integer
+        vocalisation: 
+          type: integer
+        experimental: 
+          type: integer
+        hairless: 
+          type: boolean
+        natural: 
+          type: boolean
+        rare: 
+          type: integer
+        rex: 
+          type: integer
+        suppressed_tail: 
+          type: boolean
+        short_legs: 
+          type: boolean
+        wikipedia_url:
+          type: string
+        hypoallergenic: 
+          type: boolean
+        reference_image_id: 
+          type: string
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+tags:
+  - name: Breeds
+paths:
+  /breeds:
+    get:
+      tags:
+        - Breeds
+      summary: /breeds
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '10'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '0'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: integer
+                example: '338'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Sun, 13 May 2018 13:28:57 GMT
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            X-Response-Time:
+              schema:
+                type: string
+                example: 28ms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Breeds'
+              example:
+                - id: 1
+                  name: Affenpinscher
+                - id: 2
+                  name: Afghan Hound
+                - id: 3
+                  name: African Hunting Dog
+                - id: 4
+                  name: Airedale Terrier
+                - id: 5
+                  name: Akbash Dog
+                - id: 6
+                  name: Akita
+                - id: 7
+                  name: Alapaha Blue Blood Bulldog
+                - id: 8
+                  name: Alaskan Husky
+                - id: 9
+                  name: Alaskan Malamute
+                - id: 10
+  /breeds/{breed_id}:
+    get:
+      tags:
+        - Breeds
+      summary: /breeds/:breed_id
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: breed_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: integer
+                example: '187'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Sat, 19 May 2018 12:51:33 GMT
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            X-Response-Time:
+              schema:
+                type: string
+                example: 66ms
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: 2
+                name: Afghan Hound
+                weight: "\_50 to 60 pounds"
+                height: 25 to 27 inches at the shoulder
+                life_span: 10 to 13 years
+                bred_for: Coursing and hunting
+                breed_group: Hound
+

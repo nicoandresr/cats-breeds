@@ -1,0 +1,5 @@
+query MyQuery {
+  breeds(limit: 2) {
+    id
+  }
+}

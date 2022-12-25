@@ -27,3 +27,18 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 #### Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+## Cats API
+I choose use GraphQL MESH in the Backend for the API, with mesh we can use the openapi specification from the CATS API and generate the schemas and resolvers for expose the data in a GraphQL server.
+
+GraphQL Mesh is a framework to build GraphQL Gateways on top of GraphQL and non-GraphQL services (REST, gRPC, and more).
+
+Many approaches exist to build a GraphQL Gateway:
+
+    creating an Apollo Server with Apollo DataSource to query sub-services
+    creating a GraphQL Gateway from scratch using GraphQL tools (ex: stitchSchemas())
+    use Apollo Federation
+
+Visit the [Mesh Documentation](https://the-guild.dev/graphql/mesh/docs) to learn more.
+
+
