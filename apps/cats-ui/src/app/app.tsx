@@ -1,8 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { Home } from './pages/home';
+import { Cats } from './pages/cats';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+
+import { Container } from '@mui/material';
 
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -26,6 +29,12 @@ declare module '@mui/material/styles' {
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: '#990ae3',
+    },
+    secondary: {
+      main: '#E30AC1',
+    },
   },
 });
 
@@ -35,35 +44,35 @@ export function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Box sx={{ width: 500 }}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(_, newValue: unknown) => {
-            setValue(newValue as number);
-            if (newValue === 0)
-              navigate('/')
-            if (newValue === 1)
-              navigate('/page-2')
-          }}
-        >
-          <BottomNavigationAction label="Home" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Page 2" icon={<LocationOnIcon />} />
-        </BottomNavigation>
-      </Box>
+      <Box sx={{ width: '100vw', height: '100vh', display: 'flex' }}>
+        <nav style={{ backgroundColor: '#1e1e1e', height: '100vh' }}>
+          <BottomNavigation
+            showLabels
+            sx={{
+              display: 'flex',
+              height: '10rem',
+              flexDirection: 'column',
+              backgroundColor: '#1e1e1e',
+            }}
+            value={value}
+            onChange={(_, newValue: unknown) => {
+              setValue(newValue as number);
+              if (newValue === 0) navigate('/');
+              if (newValue === 1) navigate('/cats');
+            }}
+          >
+            <BottomNavigationAction label="Breeds" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Cats" icon={<LocationOnIcon />} />
+          </BottomNavigation>
+        </nav>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
+        <Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cats" element={<Cats />} />
+          </Routes>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }

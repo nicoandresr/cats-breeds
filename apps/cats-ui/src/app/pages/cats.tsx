@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import { useQuery, gql } from '@apollo/client';
 import { Skeleton, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
@@ -24,13 +24,11 @@ const GET_BREEDS = gql`
 `;
 
 export interface Cat {
-  id: string
-  name: string
-  origin: string
-  temperament: string
+  id: string;
+  name: string;
 }
 
-export function Home() {
+export function Cats() {
   const { loading, error, data } = useQuery(GET_BREEDS);
   const [pageSize, setPageSize] = React.useState<number>(5);
 
@@ -42,20 +40,16 @@ export function Home() {
         {loading ? (
           <Skeleton variant="rectangular" width={210} height={118} />
         ) : (
-          'Cat Breeds'
+          'Cat List'
         )}
       </Typography>
 
       <Grid container spacing={3} sx={{ mt: '2rem', mb: '2rem' }}>
         <Grid xs={3}>
-          <SummaryCard stat={data?.breeds?.length} description="Breeds" skeleton={loading} />
+          <SummaryCard stat={0} description="Cats" skeleton={loading} />
         </Grid>
         <Grid xs={3}>
-          <SummaryCard stat={data?.breeds?.reduce((a: string[], c: Cat) => {
-            if(a.includes(c.origin)) return a;
-            a.push(c.origin);
-            return a;
-          }, []).length} description="Origins" skeleton={loading} />
+          <SummaryCard stat={0} description="Groups" skeleton={loading} />
         </Grid>
       </Grid>
 

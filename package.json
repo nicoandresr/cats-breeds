@@ -65,6 +65,7 @@
     "@graphql-mesh/transform-naming-convention": "^0.10.81",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.1",
+    "@mui/x-data-grid": "^5.17.17",
     "core-js": "^3.6.5",
     "graphql": "^16.6.0",
     "react": "18.2.0",
