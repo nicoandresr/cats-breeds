@@ -1,16 +1,43 @@
 import styled from '@emotion/styled';
-import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+
+import { useQuery, gql } from '@apollo/client';
 
 const StyledApp = styled.div`
   // Your style here
 `;
 
+const GET_BREEDS = gql`
+  query GetBreeds {
+    breeds(limit: 1) {
+      id
+      name
+    }
+  }
+`;
+
+export interface Cat {
+  id: string
+  name: string
+}
+
 export function App() {
+  const { loading, error, data } = useQuery(GET_BREEDS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
   return (
     <StyledApp>
-      <NxWelcome title="cats-ui" />
+      {data.breeds.map(({ id, name }: Cat) => (
+        <div key={id}>
+          <h3>{name}</h3>
+
+          <br />
+
+        </div>
+      ))}
 
       {/* START: routes */}
       {/* These routes and navigation have been generated for you */}
