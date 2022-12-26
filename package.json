@@ -63,6 +63,7 @@
     "@graphql-mesh/openapi": "^0.35.5",
     "@graphql-mesh/transform-mock": "0.13.6",
     "@graphql-mesh/transform-naming-convention": "^0.10.81",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.1",
     "core-js": "^3.6.5",
     "graphql": "^16.6.0",

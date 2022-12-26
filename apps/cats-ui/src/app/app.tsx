@@ -1,70 +1,59 @@
-import styled from '@emotion/styled';
+import * as React from "react";
+import { Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { Home } from './pages/home';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import { useQuery, gql } from '@apollo/client';
-
-const StyledApp = styled.div`
-  // Your style here
-`;
-
-const GET_BREEDS = gql`
-  query GetBreeds {
-    breeds(limit: 1) {
-      id
-      name
-    }
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: string;
+    };
   }
-`;
-
-export interface Cat {
-  id: string
-  name: string
+  interface ThemeOptions {
+    status?: {
+      danger?: string;
+    };
+  }
 }
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 export function App() {
-  const { loading, error, data } = useQuery(GET_BREEDS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-
+  const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
   return (
-    <StyledApp>
-      {data.breeds.map(({ id, name }: Cat) => (
-        <div key={id}>
-          <h3>{name}</h3>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box sx={{ width: 500 }}>
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(_, newValue: unknown) => {
+            setValue(newValue as number);
+            if (newValue === 0)
+              navigate('/')
+            if (newValue === 1)
+              navigate('/page-2')
+          }}
+        >
+          <BottomNavigationAction label="Home" icon={<FavoriteIcon />} />
+          <BottomNavigationAction label="Page 2" icon={<LocationOnIcon />} />
+        </BottomNavigation>
+      </Box>
 
-          <br />
-
-        </div>
-      ))}
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/page-2"
           element={
@@ -75,7 +64,7 @@ export function App() {
         />
       </Routes>
       {/* END: routes */}
-    </StyledApp>
+    </ThemeProvider>
   );
 }
 
