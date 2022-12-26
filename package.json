@@ -75,6 +75,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.1.4",
     "@prisma/client": "^4.5.0",
     "core-js": "^3.6.5",
     "graphql": "^16.6.0",
