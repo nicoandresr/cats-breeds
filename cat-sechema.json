@@ -1,0 +1,241 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getData",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/cat": {
+      "get": {
+        "operationId": "AppController_getCats",
+        "parameters": [
+          {
+            "name": "skip",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "take",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "description": "number of cats to skip the query",
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "default": 0,
+              "type": "number"
+            }
+          },
+          {
+            "description": "number of cats to take from the query",
+            "name": "take",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "default": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The complete list of cats in database,",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "AppController_createCat",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCat"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The cat created in database,",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cat/{id}": {
+      "get": {
+        "operationId": "AppController_getCat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The cat found from the database,",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "AppController_deletePost",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/cat/by-name/{name}": {
+      "get": {
+        "operationId": "AppController_getCatByName",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The cat found from the database,",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Cats App",
+    "description": "The cats app API to create cats",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "cats",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CatResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "breed",
+          "group",
+          "weight"
+        ]
+      },
+      "CreateCat": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "breed",
+          "group",
+          "weight"
+        ]
+      }
+    }
+  }
+}

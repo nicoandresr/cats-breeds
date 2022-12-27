@@ -72,6 +72,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.1",
     "@mui/x-data-grid": "^5.17.17",
+    "@mui/x-data-grid-pro": "^5.17.17",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",

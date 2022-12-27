@@ -1,7 +1,21 @@
-import { Body, Controller, Delete, Get, Query, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Query,
+  Param,
+  Post,
+  ParseIntPipe,
+  DefaultValuePipe,
+} from '@nestjs/common';
 import { Cat as CatModel } from '@prisma/client';
 
-import { ApiResponse, ApiBody, ApiQuery, ApiQueryOptions } from '@nestjs/swagger';
+import {
+  ApiResponse,
+  ApiBody,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { CatService } from './cat.service';
 import { CatResponse, CreateCat, QueryCatsDTO } from './types';
@@ -26,10 +40,13 @@ export class AppController {
   })
   @ApiQuery({
     type: QueryCatsDTO,
-    description: "The query object for pagination"
+    description: 'The query object for pagination',
   })
-  getCats(@Query("skip") skip: number, @Query("take") take: number) {
-    return this.catService.cats({ skip: +skip || 0, take: +take || 10});
+  getCats(
+    @Query('skip', ParseIntPipe, new DefaultValuePipe(0)) skip: number,
+    @Query('take', ParseIntPipe, new DefaultValuePipe(5)) take: number
+  ) {
+    return this.catService.cats({ skip: skip, take });
   }
 
   @Get('cat/:id')
