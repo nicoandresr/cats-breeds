@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
+import * as fs from "fs"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+  fs.writeFileSync("./cat-sechema.json", JSON.stringify(document, null, 2))
   SwaggerModule.setup('api', app, document);
 
   const globalPrefix = 'api';

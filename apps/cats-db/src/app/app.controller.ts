@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Query, Param, Post } from '@nestjs/common';
 import { Cat as CatModel } from '@prisma/client';
 
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiBody, ApiQuery, ApiQueryOptions } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { CatService } from './cat.service';
-import { CatResponse } from './types';
+import { CatResponse, CreateCat, QueryCatsDTO } from './types';
 
 @Controller()
 export class AppController {
@@ -24,8 +24,12 @@ export class AppController {
     type: [CatResponse],
     description: 'The complete list of cats in database,',
   })
-  getCats() {
-    return this.catService.cats({});
+  @ApiQuery({
+    type: QueryCatsDTO,
+    description: "The query object for pagination"
+  })
+  getCats(@Query("skip") skip: number, @Query("take") take: number) {
+    return this.catService.cats({ skip: +skip || 0, take: +take || 10});
   }
 
   @Get('cat/:id')
@@ -39,7 +43,6 @@ export class AppController {
   }
 
   @Get('cat/by-name/:name')
-  @Get('cat/:id')
   @ApiResponse({
     status: 200,
     type: CatResponse,
@@ -50,15 +53,15 @@ export class AppController {
   }
 
   @Post('cat')
-  @Get('cat/:id')
   @ApiResponse({
     status: 200,
     type: CatResponse,
     description: 'The cat created in database,',
   })
+  @ApiBody({ type: CreateCat })
   async createCat(
     @Body()
-    catData: CatModel
+    catData: CreateCat
   ): Promise<CatModel> {
     return this.catService.createCat(catData);
   }

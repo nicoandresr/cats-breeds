@@ -3,13 +3,12 @@ sources:
     handler:
       openapi:
         source: ./schema.yml
+  - name: CatDBApi
+    handler:
+      openapi:
+        source: ./cat-api-schema.json
+        endpoint: http://localhost:3333/api
 transforms:
   - namingConvention:
       typeNames: pascalCase
       fieldNames: camelCase
-  - mock:
-      mocks:
-        - apply: Cat.id
-          faker: '{{name.id}}'
-        - apply: Query.breeds
-          length: 2

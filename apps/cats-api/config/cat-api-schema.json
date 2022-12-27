@@ -15,7 +15,46 @@
     "/cat": {
       "get": {
         "operationId": "AppController_getCats",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "skip",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "take",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "description": "number of cats to skip the query",
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "default": 0,
+              "type": "number"
+            }
+          },
+          {
+            "description": "number of cats to take from the query",
+            "name": "take",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "default": 10,
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The complete list of cats in database,",
@@ -35,6 +74,16 @@
       "post": {
         "operationId": "AppController_createCat",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCat"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "The cat created in database,",
@@ -158,6 +207,29 @@
         },
         "required": [
           "id",
+          "name",
+          "breed",
+          "group",
+          "weight"
+        ]
+      },
+      "CreateCat": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          }
+        },
+        "required": [
           "name",
           "breed",
           "group",
