@@ -41,4 +41,23 @@ Many approaches exist to build a GraphQL Gateway:
 
 Visit the [Mesh Documentation](https://the-guild.dev/graphql/mesh/docs) to learn more.
 
+## Cats DB
+I choose NESTJS to set a backend up for the cats database, this nestjs server uses PrismaJS to create a database in sqlite and exposes an openapi schema that is used by the Cats-API
 
+## Cats UI
+The cats front end app is a React app that uses:
+- GraphQL ApolloCLient
+- MaterialUI components
+- React-Hook-Form
+
+## Screenshoots
+
+<img src="./assets/CatsApp Screen 1.png" alt="cats app home screen list of breeds" />
+
+<img src="./assets/CatsApp Screen 2.png" alt="cats app cats screen list of cats " />
+
+<img src="./assets/CatsApp Screen 3.png" alt="cats app cats edid a cat" />
+
+<img src="./assets/CatsApp GraphQL.png" alt="cats api in graphql" />
+
+<img src="./assets/CatsApp Swagger CatsDB.png" alt="cats db swagger" />
