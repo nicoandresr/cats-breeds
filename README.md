@@ -1,5 +1,33 @@
 # CatsApp
 
+## Getting starter
+
+First clone this repo and install dependencies with:
+
+```sh
+git clone git@github.com:nicoandresr/cats-breeds.git
+cd cats-breeds
+npm i
+```
+
+Run the Prisma database migration to create the Cats database in SQLite.
+
+```sh
+npx nx prisma-migrate cats-db
+```
+
+Build the 3 projects with
+
+```sh
+npx nx run-many --target=build
+```
+
+Run all projects:
+
+```sh
+npx nx run-many --target=serve
+```
+
 ## Architectural desitions
 
 ### NX mono-repo setup
