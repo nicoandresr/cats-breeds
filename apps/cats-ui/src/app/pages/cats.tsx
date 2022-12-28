@@ -26,6 +26,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 interface ActionsType {
   handleEditClick: (id: GridRowId) => (e: unknown) => void;
   handleDeleteClick: (id: GridRowId) => (e: unknown) => void;
@@ -87,12 +89,22 @@ const DELETE_CAT = gql`
 export interface Cat {
   id: string;
   name: string;
+  breed: string;
   group: string;
+  weight: string;
 }
 
 export function Cats() {
   const [open, setOpen] = React.useState(false);
   const [pageSize, setPageSize] = React.useState<number>(5);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm<Cat>();
+  const onSubmit: SubmitHandler<Cat> = (data) => alert("work in progress thank you for use my demo app");
 
   const { loading, error, data, refetch } = useQuery(FETCH_CAT_LIST, {
     variables: { skip: 0, take: pageSize },
@@ -108,7 +120,11 @@ export function Cats() {
 
   const handleEditClick = (id: GridRowId) => () => {
     setOpen(true);
-    console.info(id);
+    const [cat] = data.appControllerGetCats.filter((row: Cat) => row.id === id);
+    setValue('name', cat.name);
+    setValue('breed', cat.breed);
+    setValue('group', cat.group);
+    setValue('weight', cat.weight);
   };
 
   const handleClose = () => {
@@ -173,54 +189,65 @@ export function Cats() {
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
+            onClick={() => alert("wip, thank you for use my demo app")}
           />
         ))}
       </SpeedDial>
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edid Cat Info</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To edit the cat info, please enter the new information here.
-            We will update the changes.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="breed"
-            label="Breed"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="group"
-            label="Group"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="weight"
-            label="Weight"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Update</Button>
-        </DialogActions>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <DialogContentText>
+              To edit the cat info, please enter the new information here. We
+              will update the changes.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Name"
+              fullWidth
+              variant="standard"
+              {...register('name', { required: true })}
+            />
+            {errors.name && <span>This field is required</span>}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="breed"
+              label="Breed"
+              fullWidth
+              variant="standard"
+              {...register('breed', { required: true })}
+            />
+            {errors.breed && <span>This field is required</span>}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="group"
+              label="Group"
+              fullWidth
+              variant="standard"
+              {...register('group', { required: true })}
+            />
+            {errors.group && <span>This field is required</span>}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="weight"
+              label="Weight"
+              fullWidth
+              variant="standard"
+              {...register('weight', { required: true })}
+            />
+            {errors.weight && <span>This field is required</span>}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button disabled={!isValid} onClick={handleClose} type="submit">Update</Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </main>
   );
